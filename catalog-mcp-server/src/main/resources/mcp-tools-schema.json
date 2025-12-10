@@ -1,0 +1,269 @@
+{
+  "mcpVersion": "1.0.0",
+  "serverName": "petcare-catalog-mcp-server",
+  "serverVersion": "1.0.0",
+  "description": "MCP Server for Pet Care Product Catalog",
+  "tools": [
+    {
+      "name": "search_packages",
+      "description": "Search for pet wellness packages based on specific criteria like pet type, age, and special needs",
+      "category": "search",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "petType": {
+            "type": "string",
+            "enum": ["DOG", "CAT"],
+            "description": "Type of pet (DOG or CAT)"
+          },
+          "ageGroup": {
+            "type": "string",
+            "enum": ["PUPPY", "KITTEN", "ADULT", "SENIOR"],
+            "description": "Age group of the pet"
+          },
+          "hasDentalNeeds": {
+            "type": "boolean",
+            "description": "Whether pet requires dental care"
+          },
+          "needsSpayNeuter": {
+            "type": "boolean",
+            "description": "Whether pet needs spay/neuter surgery"
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Search for adult dog packages",
+          "arguments": {
+            "petType": "DOG",
+            "ageGroup": "ADULT"
+          }
+        },
+        {
+          "name": "Search for puppy packages with spay/neuter",
+          "arguments": {
+            "petType": "DOG",
+            "ageGroup": "PUPPY",
+            "needsSpayNeuter": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "get_package_details",
+      "description": "Get comprehensive details about a specific wellness package including all services and pricing",
+      "category": "information",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "packageCode": {
+            "type": "string",
+            "description": "Unique package code (e.g., 'DOG_ACTIVE_CARE')"
+          }
+        },
+        "required": ["packageCode"]
+      },
+      "examples": [
+        {
+          "name": "Get details for Active Care package",
+          "arguments": {
+            "packageCode": "DOG_ACTIVE_CARE"
+          }
+        },
+        {
+          "name": "Get details for Senior Care Plus",
+          "arguments": {
+            "packageCode": "DOG_SENIOR_CARE_PLUS"
+          }
+        }
+      ]
+    },
+    {
+      "name": "recommend_package",
+      "description": "Get AI-powered package recommendation based on comprehensive pet profile and specific needs",
+      "category": "recommendation",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "petType": {
+            "type": "string",
+            "enum": ["DOG", "CAT"],
+            "description": "Type of pet"
+          },
+          "ageYears": {
+            "type": "number",
+            "description": "Age in years",
+            "minimum": 0,
+            "maximum": 25
+          },
+          "ageMonths": {
+            "type": "number",
+            "description": "Additional months (0-11)",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "hasChronicConditions": {
+            "type": "boolean",
+            "description": "Does pet have chronic health conditions"
+          },
+          "needsDentalCare": {
+            "type": "boolean",
+            "description": "Does pet need dental care"
+          },
+          "needsSpayNeuter": {
+            "type": "boolean",
+            "description": "Does pet need spay/neuter surgery"
+          },
+          "budget": {
+            "type": "number",
+            "description": "Annual budget for pet care in dollars",
+            "minimum": 0
+          }
+        },
+        "required": ["petType", "ageYears"]
+      },
+      "examples": [
+        {
+          "name": "Recommend package for 3-year-old dog",
+          "arguments": {
+            "petType": "DOG",
+            "ageYears": 3,
+            "ageMonths": 6,
+            "needsDentalCare": true
+          }
+        },
+        {
+          "name": "Recommend package for senior cat with budget",
+          "arguments": {
+            "petType": "CAT",
+            "ageYears": 10,
+            "hasChronicConditions": true,
+            "budget": 1000
+          }
+        }
+      ]
+    },
+    {
+      "name": "compare_packages",
+      "description": "Compare multiple wellness packages side-by-side with detailed feature comparison matrix",
+      "category": "analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "packageCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of 2-4 package codes to compare",
+            "minItems": 2,
+            "maxItems": 4
+          }
+        },
+        "required": ["packageCodes"]
+      },
+      "examples": [
+        {
+          "name": "Compare Active Care vs Active Care Plus",
+          "arguments": {
+            "packageCodes": ["DOG_ACTIVE_CARE", "DOG_ACTIVE_CARE_PLUS"]
+          }
+        },
+        {
+          "name": "Compare all dog packages",
+          "arguments": {
+            "packageCodes": [
+              "DOG_ACTIVE_CARE",
+              "DOG_ACTIVE_CARE_PLUS",
+              "DOG_SENIOR_CARE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "calculate_savings",
+      "description": "Calculate potential savings when purchasing a package versus individual services",
+      "category": "analysis",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "packageCode": {
+            "type": "string",
+            "description": "Package code to analyze"
+          }
+        },
+        "required": ["packageCode"]
+      },
+      "examples": [
+        {
+          "name": "Calculate savings for Active Care Plus",
+          "arguments": {
+            "packageCode": "DOG_ACTIVE_CARE_PLUS"
+          }
+        }
+      ]
+    },
+    {
+      "name": "get_services",
+      "description": "Get list of all available pet care services with descriptions and pricing",
+      "category": "information",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Filter by service category (optional)",
+            "enum": [
+              "VACCINATION",
+              "DIAGNOSTIC",
+              "DENTAL",
+              "SURGERY",
+              "VIRTUAL_CARE",
+              "WELLNESS"
+            ]
+          }
+        }
+      },
+      "examples": [
+        {
+          "name": "Get all services",
+          "arguments": {}
+        },
+        {
+          "name": "Get dental services only",
+          "arguments": {
+            "category": "DENTAL"
+          }
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "name": "search",
+      "description": "Tools for searching and filtering packages"
+    },
+    {
+      "name": "information",
+      "description": "Tools for retrieving detailed information"
+    },
+    {
+      "name": "recommendation",
+      "description": "Tools for getting personalized recommendations"
+    },
+    {
+      "name": "analysis",
+      "description": "Tools for comparing and analyzing options"
+    }
+  ],
+  "authentication": {
+    "type": "none",
+    "description": "No authentication required for public MCP tools"
+  },
+  "rateLimit": {
+    "enabled": true,
+    "requestsPerMinute": 100,
+    "burstSize": 20
+  }
+}
