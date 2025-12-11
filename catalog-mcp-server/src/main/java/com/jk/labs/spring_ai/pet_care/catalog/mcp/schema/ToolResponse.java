@@ -29,4 +29,33 @@ public class ToolResponse {
     public static ToolResponse of(String toolName, String error) {
         return ToolResponse.builder().success(false).toolName(toolName).error(error).timestamp(LocalDateTime.now()).build();
     }
+
+    public static ToolResponse success(String toolName, Object content) {
+        return ToolResponse.builder()
+                .success(true)
+                .toolName(toolName)
+                .content(content)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    public static ToolResponse success(String toolName, Object content,
+                                       Map<String, Object> metadata) {
+        return ToolResponse.builder()
+                .success(true)
+                .toolName(toolName)
+                .content(content)
+                .metadata(metadata)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    public static ToolResponse error(String toolName, String error) {
+        return ToolResponse.builder()
+                .success(false)
+                .toolName(toolName)
+                .error(error)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
 }

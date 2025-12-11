@@ -21,5 +21,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.jk.labs.spring-ai.pet_care</groupId>
+            <artifactId>catalog-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
