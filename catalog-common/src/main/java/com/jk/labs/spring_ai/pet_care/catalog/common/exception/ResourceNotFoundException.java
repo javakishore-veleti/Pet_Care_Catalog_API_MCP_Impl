@@ -1,4 +1,21 @@
 package com.jk.labs.spring_ai.pet_care.catalog.common.exception;
 
-public class ResourceNotFoundException {
+public class ResourceNotFoundException extends RuntimeException {
+
+    private final String resourceType;
+    private final String resourceId;
+
+    public ResourceNotFoundException(String resourceType, String resourceId) {
+        super(String.format("%s not found with identifier: %s", resourceType, resourceId));
+        this.resourceType = resourceType;
+        this.resourceId = resourceId;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
 }
