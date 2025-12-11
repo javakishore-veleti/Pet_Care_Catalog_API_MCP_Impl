@@ -14,11 +14,18 @@ public class PackageServiceEntity extends BaseEntityNoId {
     @EmbeddedId  // Use a composite key
     private PackageServiceId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("packageId")
+    @JoinColumn(name = "package_id")
     private PackageEntity packageEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("serviceId")
+    @JoinColumn(name = "service_id")
     private ServiceEntity service;
+
+    private Integer quantity = 1;
+
+    @Column(columnDefinition = "TEXT")
+    private String notes;
 }

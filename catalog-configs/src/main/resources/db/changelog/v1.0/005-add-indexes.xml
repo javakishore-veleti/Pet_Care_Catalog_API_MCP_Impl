@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005-add-indexes" author="jklabs">
+        <createIndex indexName="idx_packages_code"
+                     tableName="packages"
+                     schemaName="catalog"
+                     unique="true">
+            <column name="code"/>
+        </createIndex>
+
+        <createIndex indexName="idx_packages_pet_age"
+                     tableName="packages"
+                     schemaName="catalog">
+            <column name="pet_type"/>
+            <column name="age_group"/>
+        </createIndex>
+
+        <createIndex indexName="idx_services_code"
+                     tableName="services"
+                     schemaName="catalog"
+                     unique="true">
+            <column name="code"/>
+        </createIndex>
+
+        <createIndex indexName="idx_services_category"
+                     tableName="services"
+                     schemaName="catalog">
+            <column name="category"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex indexName="idx_packages_code"
+                       tableName="packages"
+                       schemaName="catalog"/>
+            <dropIndex indexName="idx_packages_pet_age"
+                       tableName="packages"
+                       schemaName="catalog"/>
+            <dropIndex indexName="idx_services_code"
+                       tableName="services"
+                       schemaName="catalog"/>
+            <dropIndex indexName="idx_services_category"
+                       tableName="services"
+                       schemaName="catalog"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

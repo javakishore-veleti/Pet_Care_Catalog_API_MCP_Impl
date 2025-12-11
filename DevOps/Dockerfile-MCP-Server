@@ -1,0 +1,39 @@
+# catalog-mcp-server/Dockerfile
+FROM eclipse-temurin:21-jdk-alpine AS builder
+
+WORKDIR /app
+
+# Copy parent POM and module POMs
+COPY pom.xml .
+COPY catalog-common/pom.xml catalog-common/
+COPY catalog-core/pom.xml catalog-core/
+COPY catalog-mcp-server/pom.xml catalog-mcp-server/
+
+# Copy source code
+COPY catalog-common/src catalog-common/src
+COPY catalog-core/src catalog-core/src
+COPY catalog-mcp-server/src catalog-mcp-server/src
+
+# Build application
+RUN ./mvnw clean package -DskipTests -pl catalog-mcp-server -am
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# Copy JAR from builder
+COPY --from=builder /app/catalog-mcp-server/target/*.jar app.jar
+
+# Create non-root user
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+# Expose port
+EXPOSE 8081
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:8081/actuator/health || exit 1
+
+# Run application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

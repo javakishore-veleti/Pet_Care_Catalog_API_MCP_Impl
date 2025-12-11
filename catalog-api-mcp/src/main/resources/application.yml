@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: petcare-catalog-combined
+  profiles:
+    active: combined
+
+# API Server
+server:
+  port: 8080
+
+# MCP Server
+mcp:
+  server:
+    port: 8081
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

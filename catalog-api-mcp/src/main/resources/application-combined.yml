@@ -5,10 +5,15 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
@@ -18,8 +23,18 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.xml
     default-schema: catalog
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 mcp:
   server:
+    enabled: true
+    port: 8081
     tools:
       search-packages:
         enabled: true
@@ -33,3 +48,8 @@ mcp:
         enabled: true
       get-services:
         enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.jk.labs.springai.petcare: DEBUG

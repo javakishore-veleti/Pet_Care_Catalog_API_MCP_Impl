@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="004-insert-services" author="jklabs">
+        <!-- Vaccination Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="VACC_RABIES"/>
+            <column name="name" value="Rabies Vaccination"/>
+            <column name="description" value="Essential rabies vaccination"/>
+            <column name="category" value="VACCINATION"/>
+            <column name="individual_price" value="45.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="VACC_DHPP"/>
+            <column name="name" value="DHPP Vaccination"/>
+            <column name="description" value="Distemper, Hepatitis, Parvovirus, Parainfluenza"/>
+            <column name="category" value="VACCINATION"/>
+            <column name="individual_price" value="55.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <!-- Diagnostic Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="DIAG_BLOODWORK"/>
+            <column name="name" value="Comprehensive Blood Work"/>
+            <column name="description" value="Complete blood count and chemistry panel"/>
+            <column name="category" value="DIAGNOSTIC"/>
+            <column name="individual_price" value="150.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="DIAG_URINALYSIS"/>
+            <column name="name" value="Urinalysis"/>
+            <column name="description" value="Urine testing for health markers"/>
+            <column name="category" value="DIAGNOSTIC"/>
+            <column name="individual_price" value="65.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <!-- Dental Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="DENTAL_CLEANING"/>
+            <column name="name" value="Professional Dental Cleaning"/>
+            <column name="description" value="Complete dental cleaning under anesthesia"/>
+            <column name="category" value="DENTAL"/>
+            <column name="individual_price" value="450.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <!-- Surgery Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="SURG_SPAY"/>
+            <column name="name" value="Spay Surgery"/>
+            <column name="description" value="Female sterilization surgery"/>
+            <column name="category" value="SURGERY"/>
+            <column name="individual_price" value="350.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="SURG_NEUTER"/>
+            <column name="name" value="Neuter Surgery"/>
+            <column name="description" value="Male sterilization surgery"/>
+            <column name="category" value="SURGERY"/>
+            <column name="individual_price" value="300.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <!-- Virtual Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="VIRTUAL_CONSULT"/>
+            <column name="name" value="Virtual Vet Consultation"/>
+            <column name="description" value="24/7 virtual vet consultations"/>
+            <column name="category" value="VIRTUAL_CARE"/>
+            <column name="individual_price" value="40.00"/>
+            <column name="is_virtual" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="PET_CHAT"/>
+            <column name="name" value="Pet Chat™"/>
+            <column name="description" value="Unlimited messaging with vet professionals"/>
+            <column name="category" value="VIRTUAL_CARE"/>
+            <column name="individual_price" value="0.00"/>
+            <column name="is_virtual" valueBoolean="true"/>
+        </insert>
+
+        <!-- Wellness Services -->
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="WELLNESS_EXAM"/>
+            <column name="name" value="Comprehensive Wellness Exam"/>
+            <column name="description" value="Complete physical examination"/>
+            <column name="category" value="WELLNESS"/>
+            <column name="individual_price" value="75.00"/>
+            <column name="is_virtual" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="services" schemaName="catalog">
+            <column name="code" value="WELLNESS_COACH"/>
+            <column name="name" value="Pet Wellness Coaching"/>
+            <column name="description" value="Personalized wellness guidance"/>
+            <column name="category" value="WELLNESS"/>
+            <column name="individual_price" value="0.00"/>
+            <column name="is_virtual" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="004-insert-dog-packages" author="jklabs">
+        <!-- Dog Packages -->
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_EARLY_CARE"/>
+            <column name="name" value="Puppy Early Care"/>
+            <column name="description" value="Essential care for growing puppies"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="PUPPY"/>
+            <column name="care_level" value="EARLY_CARE"/>
+            <column name="base_price" value="450.00"/>
+            <column name="savings_percentage" value="30.00"/>
+            <column name="includes_dental" valueBoolean="false"/>
+            <column name="includes_spay_neuter" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_EARLY_CARE_PLUS"/>
+            <column name="name" value="Puppy Early Care Plus"/>
+            <column name="description" value="Complete care including spay/neuter"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="PUPPY"/>
+            <column name="care_level" value="EARLY_CARE_PLUS"/>
+            <column name="base_price" value="750.00"/>
+            <column name="savings_percentage" value="35.00"/>
+            <column name="includes_dental" valueBoolean="false"/>
+            <column name="includes_spay_neuter" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_ACTIVE_CARE"/>
+            <column name="name" value="Active Care for Dogs"/>
+            <column name="description" value="Comprehensive care for adult dogs"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="ADULT"/>
+            <column name="care_level" value="ACTIVE_CARE"/>
+            <column name="base_price" value="550.00"/>
+            <column name="savings_percentage" value="30.00"/>
+            <column name="includes_dental" valueBoolean="false"/>
+            <column name="includes_spay_neuter" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_ACTIVE_CARE_PLUS"/>
+            <column name="name" value="Active Care Plus for Dogs"/>
+            <column name="description" value="Complete care including dental"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="ADULT"/>
+            <column name="care_level" value="ACTIVE_CARE_PLUS"/>
+            <column name="base_price" value="950.00"/>
+            <column name="savings_percentage" value="32.00"/>
+            <column name="includes_dental" valueBoolean="true"/>
+            <column name="includes_spay_neuter" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_SENIOR_CARE"/>
+            <column name="name" value="Senior Care for Dogs"/>
+            <column name="description" value="Specialized care for aging dogs"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="SENIOR"/>
+            <column name="care_level" value="SENIOR_CARE"/>
+            <column name="base_price" value="650.00"/>
+            <column name="savings_percentage" value="30.00"/>
+            <column name="includes_dental" valueBoolean="false"/>
+            <column name="includes_spay_neuter" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="packages" schemaName="catalog">
+            <column name="code" value="DOG_SENIOR_CARE_PLUS"/>
+            <column name="name" value="Senior Care Plus for Dogs"/>
+            <column name="description" value="Complete senior care with dental"/>
+            <column name="pet_type" value="DOG"/>
+            <column name="age_group" value="SENIOR"/>
+            <column name="care_level" value="SENIOR_CARE_PLUS"/>
+            <column name="base_price" value="1050.00"/>
+            <column name="savings_percentage" value="33.00"/>
+            <column name="includes_dental" valueBoolean="true"/>
+            <column name="includes_spay_neuter" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

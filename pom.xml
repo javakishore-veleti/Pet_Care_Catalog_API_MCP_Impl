@@ -25,6 +25,7 @@
         <module>catalog-api</module>
         <module>catalog-mcp-server</module>
         <module>catalog-api-mcp</module>
+        <module>catalog-configs</module>
     </modules>
 
     <!--

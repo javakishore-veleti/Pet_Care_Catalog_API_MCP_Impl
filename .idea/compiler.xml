@@ -15,6 +15,7 @@
         <module name="catalog-api" />
         <module name="catalog-core" />
         <module name="catalog-common" />
+        <module name="catalog-configs" />
         <module name="catalog-api-mcp" />
       </profile>
     </annotationProcessing>
@@ -24,6 +25,7 @@
       <module name="catalog-api" options="-parameters" />
       <module name="catalog-api-mcp" options="-parameters" />
       <module name="catalog-common" options="-parameters" />
+      <module name="catalog-configs" options="-parameters" />
       <module name="catalog-core" options="-parameters" />
       <module name="catalog-mcp-server" options="-parameters" />
     </option>
