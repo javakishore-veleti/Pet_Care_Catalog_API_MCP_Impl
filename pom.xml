@@ -26,18 +26,8 @@
         <module>catalog-mcp-server</module>
         <module>catalog-api-mcp</module>
         <module>catalog-configs</module>
+        <module>catalog-ai-agent</module>
     </modules>
-
-    <!--
-    <modules>
-        <module>catalog-common</module>
-        <module>catalog-core</module>
-        <module>catalog-api</module>
-        <module>catalog-mcp-server</module>
-        <module>catalog-api-mcp</module>
-    </modules>
-  -->
-
     <properties>
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
