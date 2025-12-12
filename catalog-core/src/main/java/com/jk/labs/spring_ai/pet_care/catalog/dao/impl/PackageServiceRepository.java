@@ -11,7 +11,7 @@ import java.util.List;
 public interface PackageServiceRepository extends
         JpaRepository<PackageServiceEntity, PackageServiceId> {
 
-    List<PackageServiceEntity> findByPackageEntityId(Long packageId);
+    List<PackageServiceEntity> findByPackageEntityId(String packageId);
 
-    List<PackageServiceEntity> findByServiceId(Long serviceId);
+    List<PackageServiceEntity> findByServiceId(String serviceId);
 }

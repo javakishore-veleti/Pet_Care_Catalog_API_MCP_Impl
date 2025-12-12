@@ -24,7 +24,4 @@ public interface McpTool {
     default String getCategory() {
         return "General";
     }
-
-
-
 }

@@ -16,9 +16,9 @@ public class CatalogMpbServiceAppMain {
             ╔════════════════════════════════════════════════════════════╗
             ║     Pet Care Catalog - MCP Server Started Successfully     ║
             ║                                                            ║
-            ║  MCP Server running on: http://localhost:8081             ║
-            ║  Health Check: http://localhost:8081/actuator/health      ║
-            ║  MCP Tools: http://localhost:8081/mcp/tools               ║
+            ║  MCP Server running on: http://localhost:8082             ║
+            ║  Health Check: http://localhost:8082/actuator/health      ║
+            ║  MCP Tools: http://localhost:8082/mcp/tools               ║
             ║                                                            ║
             ║  Available MCP Tools:                                      ║
             ║    • search_packages                                       ║

@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.jk.labs.spring-ai.pet_care</groupId>
             <artifactId>catalog-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,6 +25,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

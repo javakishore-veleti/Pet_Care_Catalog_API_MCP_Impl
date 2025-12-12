@@ -6,6 +6,10 @@ public class McpConstants {
         throw new UnsupportedOperationException("This is a utility class");
     }
 
+    // MCP Protocol
+    public static final String MCP_VERSION = "1.0.0";
+    public static final String CONTENT_TYPE_MCP = "application/vnd.mcp+json";
+
     // Tool Names
     public static final String TOOL_SEARCH_PACKAGES = "search_packages";
     public static final String TOOL_GET_PACKAGE_DETAILS = "get_package_details";
@@ -14,7 +18,9 @@ public class McpConstants {
     public static final String TOOL_CALCULATE_SAVINGS = "calculate_savings";
     public static final String TOOL_GET_SERVICES = "get_services";
 
-    // MCP Protocol
-    public static final String MCP_VERSION = "1.0.0";
-    public static final String CONTENT_TYPE_MCP = "application/vnd.mcp+json";
+    // Tool Categories
+    public static final String CATEGORY_SEARCH = "search";
+    public static final String CATEGORY_INFORMATION = "information";
+    public static final String CATEGORY_RECOMMENDATION = "recommendation";
+    public static final String CATEGORY_ANALYSIS = "analysis";
 }

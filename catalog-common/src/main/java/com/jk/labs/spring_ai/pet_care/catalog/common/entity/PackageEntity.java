@@ -26,7 +26,7 @@ public class PackageEntity extends BaseEntity {
     @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "name", length = 1000)
+    @Column(name = "description", length = 1000)
     private String description;
 
     @Column(unique = true, nullable = false, length = 50)

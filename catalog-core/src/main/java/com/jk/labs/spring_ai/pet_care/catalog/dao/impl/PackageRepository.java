@@ -14,16 +14,16 @@ import java.util.Optional;
 @Repository
 public interface PackageRepository extends JpaRepository<PackageEntity, Long> {
 
-    Optional<PackageEntity> findByCodeAndIsActiveTrue(String code);
+    Optional<PackageEntity> findByCodeAndActiveTrue(String code);
 
-    List<PackageEntity> findByIsActiveTrue();
+    List<PackageEntity> findByActiveTrue();
 
-    List<PackageEntity> findByPetTypeAndIsActiveTrue(PetType petType);
+    List<PackageEntity> findByPetTypeAndActiveTrue(PetType petType);
 
-    List<PackageEntity> findByPetTypeAndAgeGroupAndIsActiveTrue(
+    List<PackageEntity> findByPetTypeAndAgeGroupAndActiveTrue(
             PetType petType, AgeGroup ageGroup);
 
-    Optional<PackageEntity> findByPetTypeAndAgeGroupAndCareLevelAndIsActiveTrue(
+    Optional<PackageEntity> findByPetTypeAndAgeGroupAndCareLevelAndActiveTrue(
             PetType petType, AgeGroup ageGroup, CareLevel careLevel);
 
     @Query("SELECT p FROM PackageEntity p WHERE p.active = true " +

@@ -12,42 +12,51 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor  // This will inject the List<McpTool>
 public class McpServer {
 
-    private final Map<String, McpTool> tools;
-
-    public McpServer() {
-        this.tools = new ConcurrentHashMap<>();
-    }
+    private final Map<String, McpTool> tools = new ConcurrentHashMap<>();
+    private final List<McpTool> toolList;  // Spring will inject all McpTool beans
 
     @PostConstruct
-    public void setup() {
-        // Auto-register tools to Spring Context
-        for(McpTool tool : tools.values()) {
+    public void initialize() {
+        // Auto-register all MCP tools from Spring context
+        for (McpTool tool : toolList) {
             registerMcpTool(tool);
         }
+        log.info("MCP Server initialized with {} tools", tools.size());
     }
 
     public void registerMcpTool(McpTool tool) {
-        if(tool.isEnabled()) {
+        if (tool.isEnabled()) {
             tools.put(tool.getName(), tool);
-            log.info("Registered MCP Tool: {}", tool.getName());
+            log.info("Registered MCP tool: {} (category: {})",
+                    tool.getName(), tool.getCategory());
+        } else {
+            log.debug("Tool {} is disabled, skipping registration", tool.getName());
         }
     }
 
     public void unregisterMcpTool(String toolName) {
-        McpTool tool = tools.remove(toolName);
-        log.info("Unregistered MCP Tool: {}", toolName);
+        McpTool removed = tools.remove(toolName);
+        if (removed != null) {
+            log.info("Unregistered MCP tool: {}", toolName);
+        }
     }
 
     public List<ToolDefinition> listTools() {
-        return tools.values().stream().map(McpTool::getToolDefinition).sorted(Comparator.comparing(ToolDefinition::getName)).toList();
+        return tools.values().stream()
+                .map(McpTool::getToolDefinition)
+                .sorted(Comparator.comparing(ToolDefinition::getName))
+                .toList();
     }
 
     public List<ToolDefinition> listToolsByCategory(String category) {
-        return tools.values().stream().filter(tool -> tool.getCategory().equalsIgnoreCase(category)).map(
-                McpTool::getToolDefinition).sorted(Comparator.comparing(ToolDefinition::getName)).toList();
+        return tools.values().stream()
+                .filter(tool -> tool.getCategory().equalsIgnoreCase(category))
+                .map(McpTool::getToolDefinition)
+                .sorted(Comparator.comparing(ToolDefinition::getName))
+                .toList();
     }
 
     public Optional<McpTool> getTool(String toolName) {
@@ -55,36 +64,34 @@ public class McpServer {
     }
 
     public ToolResponse executeTool(String toolName, Map<String, Object> arguments) {
+        log.debug("Executing tool: {} with arguments: {}", toolName, arguments);
+
         McpTool tool = tools.get(toolName);
-        if(tool == null) {
-            return ToolResponse.of(toolName, "Tool not found " + toolName);
+        if (tool == null) {
+            log.warn("Tool not found: {}", toolName);
+            return ToolResponse.error(toolName, "Tool not found: " + toolName);
         }
+
         try {
-            return tool.execute(arguments);
+            ToolResponse response = tool.execute(arguments);
+            log.debug("Tool {} executed successfully", toolName);
+            return response;
         } catch (Exception e) {
-            return ToolResponse.of(toolName,  "Execution failed: " + e.getMessage());
+            log.error("Error executing tool: {}", toolName, e);
+            return ToolResponse.error(toolName,
+                    "Execution failed: " + e.getMessage());
         }
     }
 
-    /**
-     * Check if a tool exists
-     */
     public boolean hasTool(String toolName) {
         return tools.containsKey(toolName);
     }
 
-    /**
-     * Get count of registered tools
-     */
     public int getToolCount() {
         return tools.size();
     }
 
-    /**
-     * Get all tool names
-     */
     public Set<String> getToolNames() {
         return new HashSet<>(tools.keySet());
     }
-
 }
