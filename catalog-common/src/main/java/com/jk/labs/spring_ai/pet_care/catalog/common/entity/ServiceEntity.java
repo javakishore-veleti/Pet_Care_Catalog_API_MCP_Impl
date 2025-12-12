@@ -3,6 +3,7 @@ package com.jk.labs.spring_ai.pet_care.catalog.common.entity;
 import com.jk.labs.spring_ai.pet_care.catalog.common.enums.ServiceCategory;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -13,9 +14,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class ServiceEntity extends BaseEntity {
 
     @Column(name = "name", length = 200)
@@ -34,8 +35,9 @@ public class ServiceEntity extends BaseEntity {
     @Column(name = "individual_price", precision = 10, scale = 2)
     private BigDecimal individualPrice;
 
+    @Builder.Default
     @Column(name = "is_virtual")
-    private Boolean isVirtual = false;
+    private Boolean virtual = false;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default

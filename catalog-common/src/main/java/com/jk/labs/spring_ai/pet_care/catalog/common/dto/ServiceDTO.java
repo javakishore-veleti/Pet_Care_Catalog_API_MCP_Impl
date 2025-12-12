@@ -26,6 +26,6 @@ public class ServiceDTO {
     @DecimalMin(value = "0.0", message = "Price must be positive")
     private BigDecimal individualPrice;
 
-    private Boolean isVirtual;
+    private Boolean virtual;
     private Integer quantity;
 }

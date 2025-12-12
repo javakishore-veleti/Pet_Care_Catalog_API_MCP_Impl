@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class AppMain {
+public class CatalogMpbServiceAppMain {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppMain.class, args);
+        SpringApplication.run(CatalogMpbServiceAppMain.class, args);
 
         System.out.println("""
             

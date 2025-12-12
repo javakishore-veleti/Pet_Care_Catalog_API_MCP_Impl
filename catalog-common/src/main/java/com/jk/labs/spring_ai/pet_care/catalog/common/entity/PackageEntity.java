@@ -5,12 +5,13 @@ import com.jk.labs.spring_ai.pet_care.catalog.common.enums.CareLevel;
 import com.jk.labs.spring_ai.pet_care.catalog.common.enums.PetType;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("JpaDataSourceORMInspection")
 @Table(name = "packages")
 @Getter
@@ -19,7 +20,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class PackageEntity extends BaseEntity {
 
     @Column(name = "name", length = 100)
@@ -49,14 +50,17 @@ public class PackageEntity extends BaseEntity {
     @Column(name = "savings_percentage", precision = 5, scale = 2)
     private BigDecimal savingsPercentage;
 
+    @Builder.Default
     @Column(name = "includes_dental")
     private Boolean includesDental = false;
 
+    @Builder.Default
     @Column(name = "includes_spay_neuter")
     private Boolean includesSpayNeuter = false;
 
+    @Builder.Default
     @Column(name = "is_active")
-    private Boolean isActive = true;
+    private Boolean active = true;
 
     @OneToMany(mappedBy = "packageEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
