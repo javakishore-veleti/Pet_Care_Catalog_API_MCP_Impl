@@ -66,6 +66,8 @@
         
         <!-- Monitoring -->
         <micrometer.version>1.12.5</micrometer.version>
+
+        <spring-ai.version>1.0.0-M5</spring-ai.version>
         
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -217,6 +219,15 @@
                 <artifactId>wiremock-standalone</artifactId>
                 <version>${wiremock.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- Spring AI BOM -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
