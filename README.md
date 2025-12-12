@@ -1,8 +1,8 @@
 # Pet Care Catalog API & MCP Implementation
 
-🐾 **Enterprise-grade Spring Boot multi-module application** providing Pet Care Product Catalog services via both REST API and MCP (Model Context Protocol) Server.
+**Enterprise-grade Spring Boot multi-module application** providing Pet Care Product Catalog services via both REST API and MCP (Model Context Protocol) Server.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -16,7 +16,7 @@
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 
-## 🎯 Overview
+## Overview
 
 This project demonstrates a modular Spring Boot architecture that exposes pet care wellness packages through:
 - **REST API** - Traditional HTTP endpoints for web/mobile applications
@@ -25,17 +25,17 @@ This project demonstrates a modular Spring Boot architecture that exposes pet ca
 
 ### Key Features
 
-✅ Multi-module Maven architecture  
-✅ Spring Boot 3.2.6 with Java 21  
-✅ H2 (dev) and PostgreSQL (prod) databases  
-✅ Liquibase database migrations  
-✅ OpenAPI 3.0 documentation  
-✅ Docker & Docker Compose ready  
-✅ Prometheus metrics  
-✅ WireMock for external service mocking  
-✅ Comprehensive test coverage
+1. Multi-module Maven architecture  
+2. Spring Boot 3.2.6 with Java 21  
+3. H2 (dev) and PostgreSQL (prod) databases  
+4. Liquibase database migrations  
+5. OpenAPI 3.0 documentation  
+6. Docker & Docker Compose ready  
+7. Prometheus metrics  
+8. WireMock for external service mocking  
+9. Comprehensive test coverage
 
-## 🏗️ Architecture
+## Architecture
 
 ### Module Dependencies
 
@@ -64,14 +64,14 @@ catalog-api    catalog-mcp-server   catalog-api-mcp
 | **Testing** | JUnit 5, TestContainers, WireMock |
 | **Monitoring** | Micrometer, Prometheus |
 
-## 📦 Prerequisites
+## Prerequisites
 
 - **Java 21+**
 - **Maven 3.9+**
 - **Docker & Docker Compose** (for infrastructure)
 - **Git**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 
@@ -122,7 +122,7 @@ mvn spring-boot:run
 ```
 Access: API on 8080, MCP on 8081
 
-## 📂 Module Structure
+## Module Structure
 
 ### catalog-common
 Shared DTOs, constants, enums, exceptions, and DAO interfaces
@@ -186,7 +186,7 @@ MCP Tools:
 ### catalog-api-mcp
 Combined module running both API and MCP Server
 
-## 🔌 API Documentation
+## API Documentation
 
 ### Swagger UI (Development)
 
@@ -218,7 +218,7 @@ curl -X POST http://localhost:8080/api/v1/recommendations \
   }'
 ```
 
-## 🤖 MCP Server
+## MCP Server
 
 ### What is MCP?
 
@@ -249,7 +249,7 @@ The MCP server can be integrated with:
 - LangChain applications
 - CrewAI multi-agent systems
 
-## 🛠️ Development
+## Development
 
 ### Database Access
 
@@ -295,7 +295,7 @@ mvn pmd:check
 mvn spring-boot:run -Dspring-boot.run.fork=false
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Build Docker Images
 
@@ -320,7 +320,7 @@ docker-compose -f docker-compose-all.yml up -d
 kubectl apply -f k8s/
 ```
 
-## 📊 Monitoring
+## Monitoring
 
 ### Health Checks
 
@@ -332,7 +332,7 @@ kubectl apply -f k8s/
 - **API**: http://localhost:8080/actuator/prometheus
 - **MCP**: http://localhost:8081/actuator/prometheus
 
-## 🧪 Testing with WireMock
+## Testing with WireMock
 
 WireMock server runs on port 9090 and provides mock responses for external services.
 
@@ -344,7 +344,7 @@ curl http://localhost:9090/payment/health
 curl -X POST http://localhost:9090/payment/process
 ```
 
-## 📝 Available Packages
+## Available Packages
 
 | Package            | Pet Type | Age Group | Features |
 |--------------------|----------|-----------|----------|
