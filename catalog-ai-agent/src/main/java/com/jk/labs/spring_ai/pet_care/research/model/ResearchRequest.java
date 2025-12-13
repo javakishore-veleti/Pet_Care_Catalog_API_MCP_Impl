@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ResearchRequest {
-    // TODO: Define request fields
+    private String query;
+    private String sessionId;
+    private Integer depth; // How deep to research
 }
