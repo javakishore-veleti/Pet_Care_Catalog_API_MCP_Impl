@@ -605,3 +605,211 @@ agent:
 | Orchestrator | 🔲 Pending | All agents |
 
 
+# Comparison Agent Module
+
+## Overview
+
+The **Comparison Agent** is part of the Pet Care multi-agent system. It provides detailed side-by-side comparison of wellness packages, helping users make informed decisions.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Comparison Agent                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ComparisonController                                            │
+│         │                                                        │
+│         ▼                                                        │
+│  ComparisonService                                               │
+│         │                                                        │
+│    ┌────┴────┐                                                   │
+│    │         │                                                   │
+│    ▼         ▼                                                   │
+│  Research   MCP Client                                           │
+│  Service    Service                                              │
+│    │         │                                                   │
+│    ▼         ▼                                                   │
+│  Research   MCP Server                                           │
+│  Agent      (get_package_details, compare_packages tools)        │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Features
+
+### 1. Full Comparison
+- Compare 2-4 packages
+- Feature matrix (side-by-side)
+- Price comparison with savings analysis
+- Winner recommendation with reasoning
+- Key differences highlighted
+
+### 2. Quick Comparison
+- Fast comparison of exactly 2 packages
+- Minimal input required
+
+### 3. Focused Comparison
+- Specify features to focus on (dental, price, vaccinations)
+- Weighted scoring based on priorities
+
+### 4. Pet-Specific Comparison
+- Consider pet type and age
+- Recommend best package for specific pet
+
+## File Structure
+
+```
+comparison/
+├── config/
+│   └── ComparisonConfig.java         # Agent configuration properties
+├── controller/
+│   └── ComparisonController.java     # REST API endpoints
+├── model/
+│   ├── ComparisonRequest.java        # Input model
+│   └── ComparisonResponse.java       # Output with all comparison details
+├── service/
+│   ├── ComparisonService.java        # Service interface
+│   └── impl/
+│       └── ComparisonServiceImpl.java    # Core comparison logic
+└── resources/
+    └── application-comparison.yml    # Configuration
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/agents/comparison/compare` | Full comparison |
+| GET | `/api/v1/agents/comparison/quick` | Quick 2-package comparison |
+| GET | `/api/v1/agents/comparison/multiple` | Multiple packages |
+| POST | `/api/v1/agents/comparison/focus` | Compare with focus areas |
+| GET | `/api/v1/agents/comparison/for-pet` | Pet-specific comparison |
+
+## Sample Request
+
+```bash
+curl -X POST http://localhost:8083/api/v1/agents/comparison/compare \
+  -H "Content-Type: application/json" \
+  -d '{
+    "packageCodes": ["DOG_GROWNUP_CARE", "DOG_GROWNUP_CARE_PLUS", "DOG_ELDER_CARE"],
+    "petType": "DOG",
+    "petAgeYears": 5,
+    "priorities": ["dental", "value"],
+    "maxBudget": 60.00
+  }'
+```
+
+## Sample Response
+
+```json
+{
+  "agentName": "Comparison Agent",
+  "packages": [
+    {
+      "packageCode": "DOG_GROWNUP_CARE",
+      "packageName": "Grown-Up Care",
+      "monthlyPrice": 39.99,
+      "includesDental": false,
+      "valueScore": 0.8
+    },
+    {
+      "packageCode": "DOG_GROWNUP_CARE_PLUS",
+      "packageName": "Grown-Up Care Plus",
+      "monthlyPrice": 54.99,
+      "includesDental": true,
+      "valueScore": 0.85
+    }
+  ],
+  "featureMatrix": {
+    "features": {
+      "Monthly Price": { "DOG_GROWNUP_CARE": "$39.99", "DOG_GROWNUP_CARE_PLUS": "$54.99" },
+      "Dental Coverage": { "DOG_GROWNUP_CARE": "✗", "DOG_GROWNUP_CARE_PLUS": "✓" }
+    }
+  },
+  "priceComparison": {
+    "cheapestPackage": "DOG_GROWNUP_CARE",
+    "mostExpensivePackage": "DOG_GROWNUP_CARE_PLUS",
+    "priceDifference": 15.00,
+    "bestValuePackage": "DOG_GROWNUP_CARE_PLUS"
+  },
+  "winner": {
+    "packageCode": "DOG_GROWNUP_CARE_PLUS",
+    "packageName": "Grown-Up Care Plus",
+    "winReason": "Best overall balance considering your priorities: dental, value",
+    "advantages": ["Includes dental coverage", "Excellent value for money"],
+    "disadvantages": ["Higher price point than alternatives"],
+    "bestForBudget": "DOG_GROWNUP_CARE",
+    "bestForCoverage": "DOG_GROWNUP_CARE_PLUS",
+    "bestForValue": "DOG_GROWNUP_CARE_PLUS"
+  },
+  "summary": "Comparing 2 packages: Grown-Up Care, Grown-Up Care Plus...",
+  "keyDifferences": [
+    "Price range: $39.99 to $54.99 per month",
+    "1 of 2 packages include dental coverage"
+  ],
+  "confidence": 0.85,
+  "nextAgentSuggestion": "Sales Agent"
+}
+```
+
+## Response Components
+
+### PackageComparison
+Details for each package being compared.
+
+### FeatureMatrix
+Side-by-side grid showing features across all packages.
+
+### PriceComparison
+Price analysis including cheapest, most expensive, and best value.
+
+### ComparisonWinner
+Recommended package with reasoning, advantages, and category winners.
+
+## Integration with Other Agents
+
+### Called By
+- **Recommendation Agent** - When multiple good matches are found
+- **Advisor Agent** - When user wants to compare options
+
+### Calls
+- **Research Agent** - To gather package data if MCP fails
+- **MCP Client** - For package details
+
+### Hands Off To
+- **Sales Agent** - After user decides on a package
+
+## Configuration
+
+```yaml
+agent:
+  comparison:
+    enabled: true
+    max-packages-to-compare: 4
+    min-packages-to-compare: 2
+    price-weight: 0.3
+    coverage-weight: 0.4
+    value-weight: 0.3
+```
+
+---
+
+## Agent Progress Tracker
+
+| Agent | Status | Dependencies |
+|-------|--------|--------------|
+| Research | ✅ Implemented | MCP Client |
+| Recommendation | ✅ Implemented | Research, MCP Client |
+| **Comparison** | ✅ Implemented | Research, MCP Client |
+| Advisor | 🔲 Next | Research, Recommendation |
+| Sales | 🔲 Pending | Recommendation, Comparison |
+| Orchestrator | 🔲 Pending | All agents |
+
+---
+
+## Next Steps
+
+1. **Advisor Agent** - General pet care Q&A and entry point
+2. **Sales Agent** - Handle purchase flow
+3. **Orchestrator** - Route between agents based on intent
