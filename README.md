@@ -445,6 +445,163 @@ curl -X POST http://localhost:9090/payment/process
 
 ---
 
+# Recommendation Agent Module
 
+## Overview
+
+The **Recommendation Agent** is part of the Pet Care multi-agent system. It analyzes pet profiles and care needs to recommend the most suitable wellness packages.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Recommendation Agent                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  RecommendationController                                        │
+│         │                                                        │
+│         ▼                                                        │
+│  RecommendationService                                           │
+│         │                                                        │
+│    ┌────┴────┐                                                   │
+│    │         │                                                   │
+│    ▼         ▼                                                   │
+│  Research   MCP Client                                           │
+│  Service    Service                                              │
+│    │         │                                                   │
+│    ▼         ▼                                                   │
+│  Research   MCP Server                                           │
+│  Agent      (recommend_package tool)                             │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Features
+
+### 1. Full Recommendation
+- Comprehensive pet profile analysis
+- Considers age, health needs, dental care, chronic conditions
+- Returns primary recommendation + alternatives
+- Provides reasoning and key benefits
+
+### 2. Quick Recommendation
+- Minimal input (pet type + age)
+- Fast response for simple queries
+
+### 3. Refine Recommendation
+- Update recommendation with additional context
+- Session-based continuity
+
+## File Structure
+
+```
+recommendation/
+├── config/
+│   └── RecommendationConfig.java       # Agent configuration properties
+├── controller/
+│   └── RecommendationController.java   # REST API endpoints
+├── model/
+│   ├── RecommendationRequest.java      # Input model
+│   └── RecommendationResponse.java     # Output model with PackageRecommendation
+├── service/
+│   ├── RecommendationService.java      # Service interface
+│   └── impl/
+│       └── RecommendationServiceImpl.java  # Core recommendation logic
+└── resources/
+    └── application-recommendation.yml  # Configuration
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/agents/recommendation/recommend` | Full recommendation |
+| GET | `/api/v1/agents/recommendation/quick` | Quick recommendation |
+| POST | `/api/v1/agents/recommendation/refine/{sessionId}` | Refine existing |
+
+## Sample Request
+
+```bash
+curl -X POST http://localhost:8083/api/v1/agents/recommendation/recommend \
+  -H "Content-Type: application/json" \
+  -d '{
+    "petType": "DOG",
+    "petName": "Buddy",
+    "ageYears": 3,
+    "ageMonths": 6,
+    "needsDentalCare": true,
+    "budgetPreference": "STANDARD"
+  }'
+```
+
+## Sample Response
+
+```json
+{
+  "agentName": "Recommendation Agent",
+  "primaryRecommendation": {
+    "packageCode": "DOG_GROWNUP_CARE_PLUS",
+    "packageName": "Grown-Up Care Plus",
+    "description": "Comprehensive adult dog care with dental coverage",
+    "monthlyPrice": 54.99,
+    "includedServices": ["Wellness Exams", "Vaccinations", "Dental Cleaning"],
+    "matchScore": 0.92
+  },
+  "alternatives": [...],
+  "reasoning": "Based on your adult dog Buddy, I recommend the Grown-Up Care Plus package...",
+  "keyBenefits": [
+    "Tailored for adult pets",
+    "Includes 8 essential services",
+    "Dental coverage included"
+  ],
+  "confidence": 0.85,
+  "recommendationType": "BEST_FIT",
+  "suggestComparison": true,
+  "nextAgentSuggestion": "Comparison Agent"
+}
+```
+
+## Integration with Other Agents
+
+### Uses Research Agent
+The Recommendation Agent calls the Research Agent to gather package data before making recommendations.
+
+### Handoff to Comparison Agent
+When multiple packages have high match scores, suggests using the Comparison Agent.
+
+### Handoff to Sales Agent
+After recommendation is accepted, can hand off to Sales Agent for purchase flow.
+
+## Configuration
+
+```yaml
+agent:
+  recommendation:
+    enabled: true
+    model: gpt-4o-mini
+    temperature: 0.5
+    min-confidence-threshold: 0.6
+    max-alternatives: 3
+```
+
+## Next Steps After This Agent
+
+1. **Comparison Agent** - Compare multiple packages side-by-side
+2. **Advisor Agent** - General pet care Q&A
+3. **Sales Agent** - Handle purchase conversions
+4. **Orchestrator** - Route between agents based on intent
+
+---
+
+## Agent Progress Tracker
+
+| Agent | Status | Dependencies |
+|-------|--------|--------------|
+| Research | ✅ Implemented | MCP Client |
+| **Recommendation** | ✅ Implemented | Research, MCP Client |
+| Comparison | 🔲 Next | Research, MCP Client |
+| Advisor | 🔲 Pending | Research |
+| Sales | 🔲 Pending | Recommendation |
+| Orchestrator | 🔲 Pending | All agents |
 
 

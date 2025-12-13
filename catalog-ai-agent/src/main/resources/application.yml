@@ -2,3 +2,30 @@ server:
   port: 8083
 
 spring.ai.openai.api-key: dummy
+
+
+# Recommendation Agent Configuration
+agent:
+  recommendation:
+    enabled: true
+    model: gpt-4o-mini
+    temperature: 0.5
+    min-confidence-threshold: 0.6
+    max-alternatives: 3
+    dog-age-thresholds:
+      puppy-max-months: 12
+      senior-min-months: 84
+    cat-age-thresholds:
+      puppy-max-months: 12
+      senior-min-months: 132
+    default-packages:
+      PUPPY: TIMELY_CARE
+      KITTEN: TIMELY_CARE
+      ADULT: GROWNUP_CARE
+      SENIOR: ELDER_CARE
+
+# Research Agent (dependency)
+agent.research:
+  enabled: true
+  model: gpt-4o-mini
+  temperature: 0.7
