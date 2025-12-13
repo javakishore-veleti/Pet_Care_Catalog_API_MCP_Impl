@@ -547,7 +547,16 @@ curl -X POST http://localhost:8083/api/v1/agents/recommendation/recommend \
     "includedServices": ["Wellness Exams", "Vaccinations", "Dental Cleaning"],
     "matchScore": 0.92
   },
-  "alternatives": [...],
+  "alternatives": [
+    {
+      "packageCode": "DOG_GROWNUP_CARE",
+      "packageName": "Grown-Up Care",
+      "description": "Standard adult dog care package",
+      "monthlyPrice": 39.99,
+      "includedServices": ["Wellness Exams", "Vaccinations"],
+      "matchScore": 0.78
+    }
+  ],
   "reasoning": "Based on your adult dog Buddy, I recommend the Grown-Up Care Plus package...",
   "keyBenefits": [
     "Tailored for adult pets",
@@ -813,3 +822,11 @@ agent:
 1. **Advisor Agent** - General pet care Q&A and entry point
 2. **Sales Agent** - Handle purchase flow
 3. **Orchestrator** - Route between agents based on intent
+
+
+Next Agent?
+Ready to build the next agent. Which would you prefer?
+
+Advisor Agent - General pet care Q&A, entry point for conversations
+Sales Agent - Handle purchase flow after recommendation/comparison
+
