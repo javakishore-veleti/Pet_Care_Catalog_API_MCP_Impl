@@ -1,0 +1,11 @@
+package com.jk.labs.spring_ai.pet_care.common.exception;
+
+public class AgentException extends RuntimeException {
+    public AgentException(String message) {
+        super(message);
+    }
+
+    public AgentException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}

@@ -12,7 +12,7 @@ public class CatalogAiAgentAppMain {
         SpringApplication.run(CatalogAiAgentAppMain.class, args);
 
         System.out.println("""
-            
+
             ╔════════════════════════════════════════════════════════════╗
             ║         Pet Care Catalog - AI Agent Started               ║
             ║                                                            ║
@@ -20,8 +20,8 @@ public class CatalogAiAgentAppMain {
             ║  Health Check: http://localhost:8083/actuator/health      ║
             ║  Chat API: http://localhost:8083/api/chat                 ║
             ║                                                            ║
-            ║  Conversational Pet Care Advisor                          ║
-            ║  Powered by Spring AI + OpenAI                            ║
+            ║  Multi-Agent System Active                                ║
+            ║  Powered by Spring AI                                     ║
             ╚════════════════════════════════════════════════════════════╝
             """);
     }
