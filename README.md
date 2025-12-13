@@ -37,6 +37,26 @@ This project demonstrates a modular Spring Boot architecture that exposes pet ca
 
 ## Architecture
 
+### Current Architecture
+
+```text
+User Request
+    ↓
+ChatController (Port 8083)
+    ↓
+ConversationService
+    ↓
+Intent Detection
+    ↓
+McpClientService
+    ↓
+MCP Server (Port 8082)
+    ↓
+Tools → PackageService
+    ↓
+Response
+```
+
 ### Module Dependencies
 
 ```

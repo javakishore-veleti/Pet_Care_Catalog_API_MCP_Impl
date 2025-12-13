@@ -6,20 +6,22 @@ import com.jk.labs.spring_ai.pet_care.common.mcp.model.ToolResponse;
 import com.jk.labs.spring_ai.pet_care.common.mcp.service.McpClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unchecked")
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class McpRestClientServiceImpl implements McpClientService {
 
     private final McpClientConfig config;
-    private final WebClient webClient;
+    private final RestTemplate restTemplate;
 
     @Override
     public ToolResponse callTool(ToolRequest request) {
@@ -28,16 +30,24 @@ public class McpRestClientServiceImpl implements McpClientService {
         try {
             String url = config.getBaseUrl() + "/mcp/tools/" + request.getToolName();
 
-            Map<String, Object> response = webClient.post()
-                    .uri(url)
-                    .bodyValue(request.getArguments() != null ? request.getArguments() : Map.of())
-                    .retrieve()
-                    .bodyToMono(Map.class)
-                    .block();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            Map<String, Object> body = request.getArguments() != null ? request.getArguments() : Map.of();
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+            @SuppressWarnings("unchecked")
+            Map<String, Object> response = restTemplate.postForObject(url, entity, Map.class);
 
             log.debug("MCP tool response: {}", response);
 
-            assert response != null;
+            if (response == null) {
+                return ToolResponse.builder()
+                        .success(false)
+                        .error("No response from MCP server")
+                        .build();
+            }
+
             return ToolResponse.builder()
                     .success((Boolean) response.get("success"))
                     .content(response.get("content"))
@@ -112,7 +122,6 @@ public class McpRestClientServiceImpl implements McpClientService {
     }
 
     private Map<String, Object> convertToMap(Object obj) {
-        // Simple conversion - enhance as needed
         if (obj instanceof Map) {
             return (Map<String, Object>) obj;
         }
